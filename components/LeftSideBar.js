@@ -56,7 +56,9 @@ const LeftSideBar = async () => {
                         </div>
                     </div>
                     <div id="data">
-                        <div className="">{session.user.name}</div>
+                        {session && session.user &&
+                            <div className="">{session.user.name}</div>
+                        }
                         {data && data.items && data.items.map(item => {
                             return (
                                 <Link key={item.id} href={`/playlist/${item.id}`} className="">{item.name}</Link>

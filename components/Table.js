@@ -59,9 +59,9 @@ export const Table = (props) => {
             <thead  >
                 {headerGroups.map(headerGroup => {
                     return (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
+                        <tr key={headerGroup}{...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
-                                <th {...column.getHeaderProps()}>
+                                <th key={column.id}{...column.getHeaderProps()}>
                                     {column.render('Header')}
                                 </th>
                             ))}
@@ -73,10 +73,10 @@ export const Table = (props) => {
                 {rows.map(row => {
                     prepareRow(row)
                     return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map(cell => {
+                        <tr key={row.id} {...row.getRowProps()}>
+                            {row.cells.map((cell, index) => {
                                 return (
-                                    <td {...cell.getCellProps()}>
+                                    <td key={index} {...cell.getCellProps()}>
                                         {/* <Link
                                             href={`./`}
                                             className='hover:underline'

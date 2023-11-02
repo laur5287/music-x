@@ -17,7 +17,7 @@ export default async function Page({ params }) {
             {data.items.map(item => {
                 return (
 
-                    <Link href={`/track/${item.track.id}`}>{item.track.name}
+                    <Link key={item.track.id} href={`/track/${item.track.id}`}>{item.track.name}
                     </Link>
 
                 )

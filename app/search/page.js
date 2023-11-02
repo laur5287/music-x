@@ -4,13 +4,20 @@ import React, { Suspense, useEffect, useState } from 'react'
 import Link from "next/link";
 import { Icons } from "@/components/icons";
 // import { generateRandomString } from "@/components/generateID";
-import { BasicTable } from '@/components/table/BasicTable';
-import { useSession } from "next-auth/react"
+import { Table } from '@/components/Table';
 
-const Search = async () => {
-
+const Search = () => {
     const [userInput, setUserInput] = useState('')
     const [tracks, setTracks] = useState([])
+
+    async function getData() {
+        const res = await fetch(`http://localhost:3000/api/spotify/search?q=${userInput}&type=track`)
+        const result = await res.json()
+        // console.log(result)
+        setTracks(result.tracks.items)
+
+    }
+
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -36,6 +43,8 @@ const Search = async () => {
     }, [tracks, userInput])
 
 
+
+
     const content = (
         <div className="flex flex-col justify-start w-full h-full rounded-sm shadow-2xl">
             <input
@@ -49,15 +58,15 @@ const Search = async () => {
                 onChange={handleChange}
                 autoFocus
             />
-            <Button onClick={handleSearch}>Search</Button>
+            <button onClick={handleSearch}>Search</button>
             <Suspense fallback={<div>loading</div>}>
-                <BasicTable data={tracks} />
+                <Table data={tracks} />
 
             </Suspense>
 
         </div>
     )
     return content
-
 }
+
 export default Search

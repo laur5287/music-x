@@ -1,66 +1,72 @@
 
 
+
 import "@/app/globals.css"
 
 import React from 'react'
 import AuthProvider from '@/app/context/AuthProvider'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
-import LeftSideBar from '@/components/LeftSideBar'
 import { getServerSession } from "next-auth/next"
 import { options } from "@/app/api/auth/[...nextauth]/options"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import { ThemeProvider } from "@/components/theme-provider"
+import LeftSideBar from '@/components/LeftSideBar'
+import { SideMenu } from '@/components/sidemenu/SideMenu'
+import { GreetingTitle } from "@/components/sidemenu/GreetingTitle";
+import PageHeader from "@/components/sidemenu/PageHeader";
+import { PlaylistCard } from "@/components/sidemenu/PlaylistCard";
+import { PlaylistItemCard } from "@/components/sidemenu/PlaylistItemCard";
+// import Layout from "../layouts/Layout.astro";
+import { getCurrentUserProfile, getCurrentUserPlaylists, getFollowedArtists } from '@/utils/musicX/generic_utils'
+import { getSession } from '@/utils/musicX/getServerSession'
+
 export const metadata = {
-  title: {
-    default: 'MusicX',
-    // template: `%s - ${siteConfig.name}`,
-  },
-  // description: siteConfig.description,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-  icons: {
+	title: {
+		default: 'MusicX',
+		// template: `%s - ${siteConfig.name}`,
+	},
+	// description: siteConfig.description,
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "white" },
+		{ media: "(prefers-color-scheme: dark)", color: "black" },
+	],
+	icons: {
 
-  },
+	},
 }
-const MusicXLayout = async ({ children }: any) => {
-  const session = await getServerSession(options)
+const MusicXLayout = async ({ children }: { children: React.ReactNode }) => {
+	const session = await getSession()
+	const userProfile = await getCurrentUserProfile(session.accessToken)
+	const userArtists = await getFollowedArtists(session.accessToken)
+	const userPlaylists = await getCurrentUserPlaylists(session.accessToken)
 
-  return (
+	return (
 
-    <html lang="en" suppressHydrationWarning className="">
-      <head />
-      <body
-        className={cn(
-          "h-screen relative   font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <AuthProvider session={session}>
-          <section className="relative p-2 grid w-full h-full  grid-rows-6 gap-2  grid-cols-[25%_minmax(75%,_1fr)] ">
-            <div className='relative col-start-1 col-end-1 row-start-1 row-end-7 rounded-sm shadow-2xl '>
+		<html lang="en" suppressHydrationWarning>
+			<head />
+			<body
+				className={cn(
+					"h-screen relative   font-sans antialiased",
+					fontSans.variable
+				)}
+			>
+				<ThemeProvider attribute="class" enableSystem>
 
-              <LeftSideBar />
-            </div>
-            <div className="relative w-full col-start-2 col-end-3 row-start-1 row-end-7 pr-2 overflow-hidden rounded-lg shadow-2xl ">
-              <section className="relative w-full h-full rounded-sm">{children}</section>
+					<AuthProvider session={session}>
+						<div id="layout-wrapper" className="relative flex items-stretch h-screen gap-2 p-2">
+							<div id="SideMenu-wrapper" className="w-[350px] flex-col hidden lg:flex overflow-y-auto">
+								<SideMenu userArtists={userArtists} userPlaylists={userPlaylists} />
+							</div>
 
-            </div>
-            <div className='row-start-6 row-end-7 rounded-sm col-span-full '>
-              <section id="player" className='sticky bottom-0 z-10 h-full shadow-inner'></section>
-            </div>
+							{children}
 
-
-          </section>
-          <TailwindIndicator />
-        </AuthProvider>
-
-
-      </body>
-    </html>
-
-
-  )
+						</div>
+						<TailwindIndicator />
+					</AuthProvider>
+				</ThemeProvider>
+			</body>
+		</html >
+	)
 }
 export default MusicXLayout

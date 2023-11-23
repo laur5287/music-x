@@ -1,23 +1,10 @@
 
-'use client'
 // import "@/app/globals.css"
 // import { getCurrentUserProfile } from '@/utils/musicX/generic_utils'
 // import { getServerSession } from "next-auth/next"
 // import { options } from "@/app/api/auth/[...nextauth]/options"
 import { Listbox, ListboxSection, ListboxItem } from "@nextui-org/listbox";
 import { Activity } from 'lucide-react';
-export const metadata = {
-	title: {
-		default: 'TestPage',
-		// template: `%s - ${siteConfig.name}`,
-	},
-	// description: siteConfig.description,
-	themeColor: [
-		{ media: "(prefers-color-scheme: light)", color: "white" },
-		{ media: "(prefers-color-scheme: dark)", color: "black" },
-	],
-
-}
 
 export default function TestPageLayout({
 	children

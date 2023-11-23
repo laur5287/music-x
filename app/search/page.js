@@ -1,10 +1,8 @@
 'use client'
-import { Button } from "@/components/ui/button";
 import React, { Suspense, useEffect, useState } from 'react'
 import Link from "next/link";
 import { Icons } from "@/components/icons";
 // import { generateRandomString } from "@/components/generateID";
-import { Table } from '@/components/Table';
 
 const Search = () => {
 	const [userInput, setUserInput] = useState('')
@@ -60,7 +58,7 @@ const Search = () => {
 			/>
 			<button onClick={handleSearch}>Search</button>
 			<Suspense fallback={<div>loading</div>}>
-				<Table data={tracks} />
+				{/* <Table data={tracks} /> */}
 
 			</Suspense>
 

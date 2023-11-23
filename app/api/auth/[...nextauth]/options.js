@@ -17,6 +17,7 @@ const params = {
 }
 const LOGIN_URL = "https://accounts.spotify.com/authorize?" + new URLSearchParams(params).toString();
 
+
 async function refreshAccessToken(token) {
 	const params = new URLSearchParams()
 	params.append("grant_type", "refresh_token")
@@ -36,7 +37,7 @@ async function refreshAccessToken(token) {
 		accessTokenExpires: Date.now() + data.expires_in * 1000
 	}
 }
-console.log('this is the return from refreshAccessToken')
+// console.log('this is the return from refreshAccessToken')
 
 
 export const options = {
@@ -52,6 +53,7 @@ export const options = {
 		async jwt({ token, account }) {
 			// Persist the OAuth access_token to the token right after signin
 			if (account) {
+
 				token.accessToken = account.access_token
 				token.refreshToken = account.refresh_token
 				token.accessTokenExpires = account.expires_at
@@ -63,6 +65,7 @@ export const options = {
 			}
 
 			// access token has expired
+			console.log(`token has expired => `, token)
 			return await refreshAccessToken(token)
 		},
 		async session({ session, token, user }) {

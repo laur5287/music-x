@@ -1,10 +1,8 @@
-import Link from 'next/link'
-import React from 'react'
-import { Button } from '@/components/ui/button'
 import { signIn, signOut } from "next-auth/react"
 import { options } from "@/app/api/auth/[...nextauth]/options"
 import { getCurrentUserProfile, getFollowedArtists, getCurrentUserPlaylists } from "@/utils/musicX/generic_utils"
 import { getServerSession } from "next-auth/next"
+import { Button } from '@nextui-org/button'
 
 
 const Home = async (props: any) => {

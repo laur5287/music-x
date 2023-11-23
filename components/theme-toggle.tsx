@@ -1,26 +1,17 @@
 "use client"
 
-import * as React from "react"
 import { useTheme } from "next-themes"
 import { useState, useEffect } from 'react'
-import { Button } from "@/components/ui/button"
+import { Button } from "@nextui-org/button";
 import { Icons } from "@/components/icons"
 
 export function ThemeToggle() {
 	const [mounted, setMounted] = useState(false)
 	const { setTheme, theme } = useTheme()
-	useEffect(() => {
-		setMounted(true)
-	}, [])
-
-	if (!mounted) {
-		return null
-	}
-
 
 	return (
 		<Button
-			variant="ghost"
+			variant="shadow"
 			size="sm"
 			onClick={() => setTheme(theme === "light" ? "dark" : "light")}
 		>

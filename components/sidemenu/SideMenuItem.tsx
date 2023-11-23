@@ -1,6 +1,6 @@
 
 // import Icon from "astro-icon";
-import { Laugh } from 'lucide-react';
+import { Home } from 'lucide-react';
 import { Children } from 'react';
 
 type Props = {
@@ -16,7 +16,7 @@ export function SideMenuItem({ children }: Props) {
 				// href={href}	
 				className="flex gap-4  py-3.5 px-5 font-semibold transition-all duration-300"
 			>
-				<Laugh className="w-6 h-6" />
+				<Home className="w-6 h-6" />
 				{children}
 			</div>
 		</li>

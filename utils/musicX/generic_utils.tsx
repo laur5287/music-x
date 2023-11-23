@@ -89,3 +89,32 @@ export async function getUserTopItems(accessToken: string, type: string) {
 	const data = await response.json();
 	return data
 }
+export async function getArtistsTopTracks(accessToken: string, artistId: string) {
+	const URL = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=us`
+	const headers = { 'Authorization': `Bearer ${accessToken}` }
+	const response = await fetch(URL, {
+		headers
+	})
+	const data = await response.json();
+	return data
+}
+export async function getPlaylistItems(accessToken: string, playlistId: string) {
+	const URL = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`
+	// const searchParameters = new URLSearchParams()
+	// searchParameters.append('','')
+	const headers = { 'Authorization': `Bearer ${accessToken}` }
+	const response = await fetch(URL, {
+		headers
+	})
+	const data = await response.json();
+	return data
+}
+export async function getPlaylistCoverImage(accessToken: string, playlistId: string) {
+	const URL = `https://api.spotify.com/v1/playlists/${playlistId}/images`
+	const headers = { 'Authorization': `Bearer ${accessToken}` }
+	const response = await fetch(URL, {
+		headers
+	})
+	const data = await response.json();
+	return data
+}

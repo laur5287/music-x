@@ -1,5 +1,5 @@
 import type { Playlist } from "@/lib/types";
-import { PlayButton } from "@/components/sidemenu/PlayButton";
+// import { PlayButton } from "@/components/sidemenu/PlayButton";
 import { PureInlineArtists } from "@/components/sidemenu/PureInlineArtists";
 interface Props {
 	playlist: Playlist;
@@ -22,7 +22,7 @@ export function PlaylistCard({ playlist }: Props) {
 						<div
 							className="absolute transition-all translate-y-4 opacity-0 right-2 bottom-2 group-hover:translate-y-0 group-hover:opacity-100"
 						>
-							<PlayButton />
+							{/* <PlayButton /> */}
 						</div>
 					</div>
 					<div className="pt-2">

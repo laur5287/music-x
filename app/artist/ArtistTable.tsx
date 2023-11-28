@@ -150,7 +150,7 @@ export default function ArtistTable({ tracks }: any) {
 				/>
 			</div>
 		);
-	}, [page, pages,]);
+	}, [page, pages]);
 
 	const classNames = React.useMemo(
 		() => ({

@@ -1,15 +1,13 @@
 import "@/app/globals.css"
 import { Providers } from "@/providers";
-// import AuthProvider from '@/app/context/AuthProvider'
-import PageHeader from "@/components/sidemenu/PageHeader";
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
-import { getCurrentUserPlaylists, getFollowedArtists } from '@/utils/musicX/generic_utils'
-import { getSession } from '@/utils/musicX/getServerSession'
-import { Artist } from "@/lib/types";
 import SideMenuNextUi from '@/components/SideMenuNextUi'
-import { Session } from '@/lib/types'
+import SessionProvider from '@/app/context/AuthProvider'
+import { getServerSession } from "next-auth/next" //server side session fetcher
+import { options } from "@/app/api/auth/[...nextauth]/options"
+import { getUserTopItems, getCurrentUserPlaylists } from '@/utils/musicX/generic_utils'
 
 
 export const metadata = {
@@ -26,17 +24,11 @@ export const metadata = {
 
 	},
 }
+
 const MusicXLayout = async ({ children }: { children: React.ReactNode }) => {
-	const session = await getSession()
-
-
-	const userArtists = await getFollowedArtists(session.accessToken)
-	const userPlaylists = await getCurrentUserPlaylists(session.accessToken)
-	// const iconClasses = "text-xl text-default-500  pointer-events-none flex-shrink-0"
-	const items: Artist[] = userArtists.artists.items
+	const session = await getServerSession(options)
 
 	return (
-
 		<html lang="en" suppressHydrationWarning>
 			<head />
 			<body
@@ -46,16 +38,17 @@ const MusicXLayout = async ({ children }: { children: React.ReactNode }) => {
 				)}
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-					<div id="layout-wrapper" className="relative flex h-screen gap-2 p-2 ">
-						<div id="SideMenu-wrapper" className="hidden w-[30vw] h-auto overflow-y-scroll flex-col lg:flex">
-							<SideMenuNextUi userArtists={userArtists} userPlaylists={userPlaylists} />
-						</div>
-						<div id="children-layout-wrapper" className="overflow-hidden grow">
-							<PageHeader session={session} />
-							{children}
+					<SessionProvider session={session}>
+						<div id="layout-wrapper" className="relative flex h-screen gap-2 p-2 ">
+							<div id="SideMenu-wrapper" className="hidden w-[30vw] h-auto overflow-y-scroll flex-col lg:flex">
+								<SideMenuNextUi />
+							</div>
+							<div id="children-layout-wrapper" className="overflow-hidden grow">
+								{children}
 
+							</div>
 						</div>
-					</div>
+					</SessionProvider>
 					<TailwindIndicator />
 				</Providers>
 			</body>

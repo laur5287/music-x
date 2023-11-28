@@ -2,7 +2,7 @@ interface Props {
 	userName: string
 }
 
-export function GreetingTitle({ userName }: Props) {
+export function GreetingTitle({ userName = 'stranger' }: Props) {
 
 	const currentTime = new Date();
 	const currentHour = currentTime.getHours()

@@ -1,14 +1,47 @@
 'use client'
+import { useSession } from "next-auth/react"
 import { Artist, Playlist } from "@/lib/types";
 import { Card, CardBody, CardFooter, Dropdown, DropdownMenu, DropdownTrigger, Image, Button, DropdownItem } from "@nextui-org/react";
 import Link from "next/link";
-import { Home, LibraryBig, Music } from "lucide-react";
+import { CloudFog, Home, LibraryBig, Music } from "lucide-react";
 import { Divider } from "@nextui-org/react";
+import { Session } from "@/lib/types";
+import { getCurrentUserPlaylists, getFollowedArtists } from '@/utils/musicX/generic_utils'
+import { useEffect, useState } from 'react'
 
-export default function SideMenuNextUi({ userArtists, userPlaylists }: { userArtists: any, userPlaylists: any }) {
 
-	const items: Artist[] = userArtists.artists.items
-	const playlists: Playlist[] = userPlaylists.items
+
+export default function SideMenuNextUi() {
+
+	const { data: session, status } = useSession()
+	const [items, setItems] = useState<Artist[] | null>(null)
+	const [playlists, setPlaylists] = useState<Playlist[] | null>(null)
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				if (!(session as Session).accessToken) {
+					return
+				}
+				const accessToken = (session as Session).accessToken;
+				const userPlaylists = await getCurrentUserPlaylists(accessToken!)
+				const userArtists = await getFollowedArtists(accessToken!)
+				setItems(userArtists.artists.items)
+				setPlaylists(userPlaylists.items)
+			} catch (error) {
+			} finally {
+				setLoading(false)
+			}
+		}; //fetchData definition
+
+		if (session) {
+			setLoading(true)
+			fetchData()
+		}
+	}, [session]);
+
+	if (!session) { return <div className="">No session</div> }
 
 	return (
 		<>
@@ -23,7 +56,7 @@ export default function SideMenuNextUi({ userArtists, userPlaylists }: { userArt
 			</div>
 			<Divider orientation="horizontal" />
 			<div className="" id="playlists-wrapper">
-				{playlists.map(playlist => (
+				{playlists ? playlists.map(playlist => (
 					<Card
 						isBlurred
 						id='playlist-card'
@@ -51,7 +84,7 @@ export default function SideMenuNextUi({ userArtists, userPlaylists }: { userArt
 							<p className="text-default-500">{playlist.type}</p>
 						</CardFooter>
 					</Card>
-				))}
+				)) : <span>No playlist</span>}
 			</div>
 
 			<div className="flex gap-4 bg-foreground/10  py-3.5 px-2 font-semibold " >
@@ -60,7 +93,7 @@ export default function SideMenuNextUi({ userArtists, userPlaylists }: { userArt
 			</div>
 			<Divider orientation="horizontal" />
 			<div className="" id="user-follow-artists">
-				{items.map((item, index) => (
+				{items ? items.map((item, index) => (
 					// <div className="flex items-center w-full">
 					<Card
 						isBlurred
@@ -93,7 +126,7 @@ export default function SideMenuNextUi({ userArtists, userPlaylists }: { userArt
 					</Card>
 					// </div>
 
-				))}
+				)) : <span className="">No favorite artists</span>}
 			</div>
 
 

@@ -81,6 +81,7 @@ export async function getCurrentUserPlaylists(accessToken: string) {
 }
 
 export async function getUserTopItems(accessToken: string, type: string) {
+	// Allowed values for ****type**** : "artists", "tracks"
 	const URL = `https://api.spotify.com/v1/me/top/${type}`
 	const headers = { 'Authorization': `Bearer ${accessToken}` }
 	const response = await fetch(URL, {

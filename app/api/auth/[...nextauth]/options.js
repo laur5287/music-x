@@ -1,5 +1,5 @@
 import SpotifyProvider from "next-auth/providers/spotify";
-
+// import { NextAuthOptions } from "next-auth";
 const scopes = [
 	"user-read-email",
 	"playlist-read-private",
@@ -30,6 +30,7 @@ async function refreshAccessToken(token) {
 		body: params
 	})
 	const data = await response.json()
+	console.log('this is the return from refreshAccessToken')
 	return {
 		...token,
 		accessToken: data.access_token,
@@ -37,23 +38,25 @@ async function refreshAccessToken(token) {
 		accessTokenExpires: Date.now() + data.expires_in * 1000
 	}
 }
-// console.log('this is the return from refreshAccessToken')
 
 
 export const options = {
 	providers: [
 		SpotifyProvider({
-			clientId: process.env.SPOTIFY_CLIENT_ID,
-			clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+			clientId: process.env.SPOTIFY_CLIENT_ID || '',
+			clientSecret: process.env.SPOTIFY_CLIENT_SECRET || '',
 			authorization: LOGIN_URL
 		}),
 	],
-	secret: process.env.JWT_SECRET,
+	// secret: process.env.NEXTAUTH_SECRET,
+
 	callbacks: {
-		async jwt({ token, account }) {
+		async signIn({ user, account, profile }) {
+			return true
+		},
+		async jwt({ token, account, user }) {
 			// Persist the OAuth access_token to the token right after signin
 			if (account) {
-
 				token.accessToken = account.access_token
 				token.refreshToken = account.refresh_token
 				token.accessTokenExpires = account.expires_at
@@ -68,9 +71,14 @@ export const options = {
 			console.log(`token has expired => `, token)
 			return await refreshAccessToken(token)
 		},
-		async session({ session, token, user }) {
+
+		async session({ session, token }) {
 			// Send properties to the client, like an access_token from a provider.
+
+			// console.log(`session from session callback before`, session)
 			session.accessToken = token.accessToken
+			// console.log(`session from session callback after`, session)
+
 			return session
 		}
 	}

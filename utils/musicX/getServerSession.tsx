@@ -8,5 +8,5 @@ export const getSession = async () => {
 	if (session) {
 		return session
 	}
-	return null
+	return 'no session from getServerSession.tsx'
 }

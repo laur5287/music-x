@@ -4,6 +4,7 @@ import { Card, CardBody, CardHeader, Image, Skeleton } from "@nextui-org/react";
 import { getArtist, getArtistsTopTracks } from '@/utils/musicX/generic_utils'
 import { useEffect, useState } from "react";
 import ArtistTable from '@/app/artist/ArtistTable'
+import { Session } from "@/lib/types";
 
 const ArtistPage = ({ params }: { params: { id: string } }) => {
 	const { data: session } = useSession();

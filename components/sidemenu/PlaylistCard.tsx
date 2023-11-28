@@ -1,6 +1,6 @@
 import type { Playlist } from "@/lib/types";
-// import { PlayButton } from "@/components/sidemenu/PlayButton";
 import { PureInlineArtists } from "@/components/sidemenu/PureInlineArtists";
+import Image from "next/image";
 interface Props {
 	playlist: Playlist;
 }
@@ -14,7 +14,7 @@ export function PlaylistCard({ playlist }: Props) {
 			>
 				<div className="w-40">
 					<div className="relative flex-none w-full h-40 mx-auto shadow-lg group">
-						<img
+						<Image
 							src={playlist.images[0].url}
 							alt={playlist.name}
 							className="object-cover h-full w-full rounded-md shadow-[5px_0_30px_0px_rgba(0,0,0,0.3)]"

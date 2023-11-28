@@ -5,7 +5,7 @@ export type Session = {
 		email: string;
 		image: string;
 	};
-	accessToken: string;
+	accessToken?: string;
 };
 export interface Playlist {
 	collaborative: boolean;

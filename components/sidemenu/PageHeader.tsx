@@ -1,16 +1,12 @@
 import { ChevronLeft } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle'
 import AvatarUser from '@/components/sidemenu/Avatar'
-import { Session } from '@/lib/types';
 
-type Props = {
-	session: Session
-}
-export default function PageHeader({ session }: Props) {
+export default async function PageHeader() {
 	return (
 		<>
 			<div
-				className="relative z-10 flex justify-between px-6 py-4"
+				className="relative z-10 flex px-6 py-4"
 			>
 				<a
 					href="/"
@@ -19,9 +15,10 @@ export default function PageHeader({ session }: Props) {
 				>
 					<ChevronLeft name="bi:chevron-left" className="h-4 w-4 -ml-0.5" />
 				</a>
+				<h1 className="flex items-center justify-center text-2xl grow">Spotify whit a<span className="text-3xl font-bold font-sherif text-yellow">&nbsp;twist</span></h1>
 				<div className="flex items-center justify-center gap-2">
 					<ThemeToggle />
-					<AvatarUser session={session} />
+					<AvatarUser />
 
 				</div>
 			</div>

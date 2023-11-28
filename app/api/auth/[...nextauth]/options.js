@@ -48,7 +48,7 @@ export const options = {
 			authorization: LOGIN_URL
 		}),
 	],
-	// secret: process.env.NEXTAUTH_SECRET,
+	secret: process.env.NEXTAUTH_SECRET,
 
 	callbacks: {
 		async signIn({ user, account, profile }) {

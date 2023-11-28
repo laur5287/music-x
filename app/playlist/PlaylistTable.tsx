@@ -111,10 +111,6 @@ export default function PlaylistTable({ tracks }: any) {
 			</div>
 		);
 	}, [
-		filterValue,
-		statusFilter,
-		tracks.length,
-		hasSearchFilter,
 	]);
 
 	const bottomContent = React.useMemo(() => {
@@ -132,14 +128,10 @@ export default function PlaylistTable({ tracks }: any) {
 					variant="light"
 					onChange={setPage}
 				/>
-				{/* <span className="text-small text-default-400">
-					{selectedKeys === "all"
-						? "All items selected"
-						: `${selectedKeys.size} of ${items.length} selected`}
-				</span> */}
+
 			</div>
 		);
-	}, [selectedKeys, tracks.length, page, pages, hasSearchFilter]);
+	}, []);
 
 	const classNames = React.useMemo(
 		() => ({

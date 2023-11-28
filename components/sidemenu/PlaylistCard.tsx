@@ -15,6 +15,8 @@ export function PlaylistCard({ playlist }: Props) {
 				<div className="w-40">
 					<div className="relative flex-none w-full h-40 mx-auto shadow-lg group">
 						<Image
+							height={100}
+							width='100'
 							src={playlist.images[0].url}
 							alt={playlist.name}
 							className="object-cover h-full w-full rounded-md shadow-[5px_0_30px_0px_rgba(0,0,0,0.3)]"

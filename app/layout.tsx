@@ -37,20 +37,20 @@ const MusicXLayout = async ({ children }: { children: React.ReactNode }) => {
 					fontSans.variable
 				)}
 			>
-				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-					<SessionProvider session={session}>
-						<div id="layout-wrapper" className="relative flex h-screen gap-2 p-2 ">
-							<div id="SideMenu-wrapper" className="hidden w-[30vw] h-auto overflow-y-scroll flex-col lg:flex">
-								<SideMenuNextUi />
-							</div>
-							<div id="children-layout-wrapper" className="overflow-hidden grow">
-								{children}
-
-							</div>
+				{/* <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}> */}
+				<SessionProvider session={session}>
+					<div id="layout-wrapper" className="relative flex h-screen gap-2 p-2 ">
+						<div id="SideMenu-wrapper" className="hidden w-[30vw] h-auto overflow-y-scroll flex-col lg:flex">
+							<SideMenuNextUi />
 						</div>
-					</SessionProvider>
-					<TailwindIndicator />
-				</Providers>
+						<div id="children-layout-wrapper" className="overflow-hidden grow">
+							{children}
+
+						</div>
+					</div>
+				</SessionProvider>
+				<TailwindIndicator />
+				{/* </Providers> */}
 			</body>
 		</html >
 	)
